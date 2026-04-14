@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
 
-    @Value("${jwt.secret:miClaveSecretaSuperLargaQueDebeSerAlMenos32CaracteresParaHS256}")
+    @Value("${jwt.secret}")
     private String secret;
 
     @Value("${jwt.expiration:86400000}") // 24 horas en milisegundos

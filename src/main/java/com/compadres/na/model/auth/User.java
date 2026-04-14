@@ -59,7 +59,7 @@ public class User implements UserDetails {
         // Asumimos 'A' -> ROLE_ADMIN, 'U' -> ROLE_USER
         String roleName = "ROLE_USER"; // Default
         if (this.role != null) {
-            if (this.role == "EMPLOYEE") {
+            if ("EMPLOYEE".equals(this.role)) {
                 roleName = "ROLE_ADMIN";
             }
             // Agrega más mapeos si es necesario

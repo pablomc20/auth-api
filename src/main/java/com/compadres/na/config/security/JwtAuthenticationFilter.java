@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.lang.NonNull;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.compadres.na.service.config.CustomUserDetailsService;
@@ -31,23 +32,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    /**
-     * Verifica si el path de la solicitud requiere autenticación JWT.
-     * Los paths públicos no requieren token.
-     */
-    private boolean requiresAuthentication(String requestURI) {
-        return !(requestURI.startsWith("/auth/") ||
-                requestURI.startsWith("/public/") ||
-                requestURI.startsWith("/images/file/") ||
-                requestURI.contains("/swagger-ui") ||
-                requestURI.contains("/v3/api-docs") ||
-                requestURI.equals("/swagger-ui.html"));
-    }
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         try {
             final String authHeader = request.getHeader("Authorization");
@@ -55,9 +43,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String username;
 
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                if (requiresAuthentication(request.getRequestURI())) {
-                    throw new AuthenticationException("Token de autenticación requerido");
-                }
                 filterChain.doFilter(request, response);
                 return;
             }
