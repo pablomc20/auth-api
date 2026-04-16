@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/auth/**").permitAll() // Endpoints de autenticación públicos
+                        .requestMatchers("/auth/**", "/token").permitAll() // OAuth Alexa y autenticación pública
                         .requestMatchers("/public/**").permitAll() // Endpoints públicos
                         .requestMatchers("/images/file/**").permitAll() // Archivos de imagen públicos
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Swagger

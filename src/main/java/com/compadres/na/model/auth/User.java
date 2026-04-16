@@ -35,6 +35,9 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(name = "alexa_billing_id")
+    private String alexaBillingId;
+
     @Column(columnDefinition = "boolean default true")
     private boolean enabled;
 
@@ -69,7 +72,6 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        // Usamos el email como "username" para la autenticación
         return this.email;
     }
 
