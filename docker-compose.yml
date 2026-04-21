@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  java-app:
+    build: .
+    volumes:
+      - /app/uploads:/app/uploads
+    env_file:
+      - .env
+    restart: unless-stopped

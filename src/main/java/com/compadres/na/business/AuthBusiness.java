@@ -13,7 +13,7 @@ import com.compadres.na.dto.auth.RegisterRequest;
 import com.compadres.na.exceptions.custom.AuthenticationException;
 import com.compadres.na.model.auth.User;
 import com.compadres.na.model.auth.UserDetail;
-import com.compadres.na.repository.auth.UserRepositoryImpl;
+import com.compadres.na.repository.auth.UserRepository;
 import com.compadres.na.service.config.JwtUtil;
 import com.compadres.na.service.user.UserService;
 
@@ -25,7 +25,7 @@ public class AuthBusiness implements UserService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final UserRepositoryImpl userRepository;
+    private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -46,6 +46,7 @@ public class AuthBusiness implements UserService {
         return AuthResponse.builder()
                 .email(user.getEmail())
                 .name(user.getUserDetail().getName())
+                .role(user.getRole())
                 .uriImage(user.getUserDetail().getUrl_image())
                 .id(user.getUserId().toString())
                 .token(token).build();
