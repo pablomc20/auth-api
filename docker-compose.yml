@@ -7,4 +7,5 @@ services:
       - /app/uploads:/app/uploads
     env_file:
       - .env
+    container_name: auth-api
     restart: unless-stopped
