@@ -68,7 +68,6 @@ public class AuthBusiness implements UserService {
 
         UserDetail detail = UserDetail.builder()
                 .name(registerRequest.name())
-                .phone(registerRequest.phone())
                 .build();
 
         detail.setUser(user);
