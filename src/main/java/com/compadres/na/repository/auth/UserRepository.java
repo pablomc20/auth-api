@@ -17,9 +17,16 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     boolean existsByEmail(String email);
 
-    @Query("SELECT u FROM User u " +
-            "LEFT JOIN FETCH u.userDetail " +
-            "WHERE u.email = :email")
-    Optional<User> findByEmailWithDetail(@Param("email") String email);
+    boolean existsByUserDetailPhone(String phone);
+
+    @Query("""
+        SELECT u FROM User u
+        LEFT JOIN FETCH u.userDetail ud
+        WHERE u.email = :identifier
+        OR ud.phone = :identifier
+    """)
+    Optional<User> findByEmailOrPhone(
+        @Param("identifier") String identifier
+    );
 
 }

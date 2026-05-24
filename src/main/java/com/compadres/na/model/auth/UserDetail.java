@@ -30,9 +30,10 @@ public class UserDetail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID userDetailId;
 
-    private String name;
+    private String legal_representative;
     private String phone;
-    private String url_image;
+    @Column(name = "url_image")
+    private String urlImage;
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)

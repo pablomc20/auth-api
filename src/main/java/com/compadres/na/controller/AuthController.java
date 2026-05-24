@@ -16,6 +16,8 @@ import com.compadres.na.dto.auth.RegisterRequest;
 import com.compadres.na.service.oauth.OAuthAuthorizationService;
 import com.compadres.na.service.user.UserService;
 
+import static com.compadres.na.utils.FormatStringUtils.escapeHtml;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -72,7 +74,7 @@ public class AuthController {
                 .body(html);
     }
 
-    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         AuthResponse response = userService.authLogin(loginRequest);
 
@@ -105,21 +107,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
-        userService.registerNewUser(request);
-        return ResponseEntity.ok("Usuario registrado exitosamente");
-    }
-
-    private String escapeHtml(String value) {
-        if (value == null) {
-            return "";
-        }
-
-        return value
-                .replace("&", "&amp;")
-                .replace("\"", "&quot;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;");
-    }
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(userService.registerNewUser(request));
+    }    
 
 }

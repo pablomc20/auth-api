@@ -9,5 +9,6 @@ public record AuthResponse(
         String uriImage,
         String role,
         String email,
+        String phone,
         String token) {
 }

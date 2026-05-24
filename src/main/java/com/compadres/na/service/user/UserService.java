@@ -7,5 +7,5 @@ import com.compadres.na.dto.auth.RegisterRequest;
 public interface UserService {
   AuthResponse authLogin(LoginRequest loginRequest);
 
-  void registerNewUser(RegisterRequest registerRequest);
+  AuthResponse registerNewUser(RegisterRequest registerRequest);
 }
