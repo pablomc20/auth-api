@@ -1,8 +1,8 @@
 package com.compadres.na.repository.auth;
 
-public final class UserQueryBD {
+public final class AuthQueryBD {
 
-    private UserQueryBD(){
+    private AuthQueryBD(){
 
     }
 

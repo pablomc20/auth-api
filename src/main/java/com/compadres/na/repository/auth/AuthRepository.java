@@ -11,13 +11,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface AuthRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByEmail(String email);
 
-    boolean existsByEmail(String email);
-
-    boolean existsByUserDetailPhone(String phone);
+    Optional<User> findByUserDetailPhone(String phone);
 
     @Query("""
         SELECT u FROM User u
