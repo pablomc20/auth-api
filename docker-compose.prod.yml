@@ -1,0 +1,6 @@
+services:
+  auth-api:
+    build: .
+    image: pablovski/auth-api:latest  # <--- ¡Tu usuario debe estar aquí!
+    ports:
+      - "8083:8083"

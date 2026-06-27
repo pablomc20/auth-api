@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.compadres.na.exceptions.custom.AuthenticationException;
+import com.compadres.na.model.auth.User;
 
 import javax.crypto.SecretKey;
 
@@ -58,13 +59,19 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return createToken(new HashMap<>(), userDetails);
+        User user = (User) userDetails;
+
+        String username = user.getUserDetail().getPhone() != null
+                ? user.getUserDetail().getPhone()
+                : user.getEmail();
+
+        return createToken(new HashMap<>(), username);
     }
 
-    public String createToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String createToken(Map<String, Object> extraClaims, String username) {
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)

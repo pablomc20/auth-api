@@ -40,7 +40,7 @@ public class AuthBusiness implements UserService {
     @Override
     public AuthResponse authLogin(LoginRequest loginRequest) {
 
-        String identifier = loginRequest.email() != null ? loginRequest.email() : loginRequest.phone();
+        String identifier = loginRequest.username();
 
         if (identifier == null) {
             throw new DataValidationException("Se requiere un email o teléfono para iniciar sesión.");
