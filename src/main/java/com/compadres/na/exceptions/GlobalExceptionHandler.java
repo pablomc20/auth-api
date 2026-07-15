@@ -2,6 +2,9 @@ package com.compadres.na.exceptions;
 
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -15,15 +18,18 @@ import com.compadres.na.exceptions.custom.BaseCustomException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(BaseCustomException.class)
-    public ResponseEntity<ErrorResponse> handleBaseCustomException(BaseCustomException ex) {
-        ErrorResponse response = ErrorResponse.builder()
-                .error(ex.getError())
-                .description(ex.getDescription())
-                .status(ex.getStatusCode())
-                .build();
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-        return ResponseEntity.status(ex.getStatusCode()).body(response);
+    @ExceptionHandler(BaseCustomException.class)
+    public ResponseEntity<ErrorResponse> handleBaseCustomException(BaseCustomException ex) {    
+        logger.error("Excepción personalizada: {} - {}", ex.getError(), ex.getDescription(), ex);
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getError(),
+                ex.getDescription(),
+                ex.getStatusCode());
+
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponse);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
